@@ -2,7 +2,11 @@ package com.wyvrn.increment.windows;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import com.googlecode.lanterna.TextColor;
@@ -68,9 +72,17 @@ public class MainMenu extends GameWindow {
         buttons.add(new Button("Load Game", new Runnable() {
             @Override
             public void run() {
+                Path saveDir = Paths.get(System.getProperty("user.home") + "/.increment-saves/");
+                try {
+                    Files.createDirectory(saveDir);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 FileDialog dialog = new FileDialogBuilder()
                         .setTitle("Load Game")
                         .setDescription("Choose a save file (probably ending in .json)")
+                        .setSelectedFile(saveDir.toFile())
                         .setActionLabel("Load")
                         .build();
                 dialog.setTheme(LanternaThemes.getRegisteredTheme("businessmachine"));
