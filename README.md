@@ -8,12 +8,12 @@ A Java game I wrote for a compsci project.
 
 ### Inheritance
 - [x] `GameWindow` extends `BasicWindow` for themeing and passing a reference to the TUI.
-- [ ] `Generator` extends building, `SmallGenerator` and `LargeGenerator` both extend `Generator`.
+- [ ] `Generator` extends `Building`, `SmallGenerator` and `LargeGenerator` both extend `Generator`.
 ### Abstract classes
 - [x] The `GameWindow` class is an abstract class extended by multiple game windows.
 - [ ] The `Building` class is an abstract class extended by the buyable buildings.
 ### Interfaces
-- [ ] The `SmallGenerator` class implements the `Upgradable` interface.
+- [ ] The `SmallGenerator` and `LargeGenerator` classes both implement the `Upgradable` interface.
 ### File I/O
 - [x] Loading the main menu triggers music to be played, which is read from a resource folder, converted to an `AudioInputStream`, and then played.
 - [ ] Game state is loaded from a file and then saved to the same file.
