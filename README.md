@@ -4,6 +4,20 @@
 ## Description
 A Java game I wrote for a compsci project.
 
+## Implemented Concepts
+
+### Inheritance
+- [x] `GameWindow` extends `BasicWindow` for themeing and passing a reference to the TUI.
+- [ ] `Generator` extends building, `SmallGenerator` and `LargeGenerator` both extend `Generator`.
+### Abstract classes
+- [x] The `GameWindow` class is an abstract class extended by multiple game windows.
+- [ ] The `Building` class is an abstract class extended by the buyable buildings.
+### Interfaces
+- [ ] The `SmallGenerator` class implements the `Upgradable` interface.
+### File I/O
+- [x] Loading the main menu triggers music to be played, which is read from a resource folder, converted to an `AudioInputStream`, and then played.
+- [ ] Game state is loaded from a file and then saved to the same file.
+
 ## Requirements
 - Cool Retro Term (https://github.com/Swordfish90/cool-retro-term)
 - Maven (To build from source)
