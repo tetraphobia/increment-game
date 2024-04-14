@@ -1,20 +1,13 @@
 package com.wyvrn.increment.panels;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.gui2.Borders;
 import com.googlecode.lanterna.gui2.Button;
-import com.googlecode.lanterna.gui2.Direction;
 import com.googlecode.lanterna.gui2.GridLayout;
-import com.googlecode.lanterna.gui2.LayoutData;
-import com.googlecode.lanterna.gui2.LinearLayout;
 import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.GridLayout.Alignment;
-import com.wyvrn.increment.windows.GameWindow;
 
 /**
  * MainMenu
@@ -54,10 +47,6 @@ public class MainMenu extends Panel {
         // Alignment for components
         headerPanel.setLayoutData(GridLayout.createLayoutData(Alignment.CENTER, Alignment.CENTER, true, false));
         mainMenuPanel.setLayoutData(GridLayout.createLayoutData(Alignment.CENTER, Alignment.CENTER, false, false));
-    }
-
-    private File File(String string) {
-        return null;
     }
 
     private ArrayList<Button> generateMenuItems(){

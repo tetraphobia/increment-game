@@ -30,6 +30,14 @@ public class App {
         Terminal terminal = new DefaultTerminalFactory().createTerminal();
         Screen screen = new TerminalScreen(terminal);
 
+        // Play some sweet chiptunes
+        try {
+            Audio.playMusic();
+        } catch (LineUnavailableException | UnsupportedAudioFileException e) {
+            e.printStackTrace();
+            System.out.println("Couldn't load music file, continuing without music.");
+        }
+
         screen.startScreen();
 
         GameWindow window = new GameWindow();
@@ -40,12 +48,5 @@ public class App {
         window.setComponent(new MainMenu());
         gui.addWindowAndWait(window);
 
-        // Play some sweet chiptunes
-        try {
-            Audio.playMusic();
-        } catch (LineUnavailableException | UnsupportedAudioFileException e) {
-            e.printStackTrace();
-            System.out.println("Couldn't load music file, continuing without music.");
-        }
     }
 }

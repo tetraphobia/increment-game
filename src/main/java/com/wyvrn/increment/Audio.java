@@ -14,7 +14,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  */
 public class Audio {
     public static void playMusic() throws LineUnavailableException, UnsupportedAudioFileException, IOException {
-        URL musicFile = Audio.class.getResource("underclocked.mp3");
+        URL musicFile = Audio.class.getResource("underclocked.wav");
 
         AudioInputStream stream = AudioSystem.getAudioInputStream(musicFile);
         Clip clip = AudioSystem.getClip();
