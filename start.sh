@@ -1,5 +1,10 @@
 if ! [ -x "$(command -v cool-retro-term)" ]; then
-    echo 'Error: cool-retro-term is missing. Unable to do cool things.' >&2
+    echo 'Error: cool-retro-term missing in PATH. Unable to wrap application.' >&2
+    exit 1
+fi
+
+if ! [ -x "$(command -v cool-retro-term)" ]; then
+    echo 'Error: mvn missing in PATH. Unable to build application.' >&2
     exit 1
 fi
 
