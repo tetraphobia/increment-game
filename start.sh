@@ -3,7 +3,7 @@ if ! [ -x "$(command -v cool-retro-term)" ]; then
     exit 1
 fi
 
-if ! [ -x "$(command -v cool-retro-term)" ]; then
+if ! [ -x "$(command -v mvn)" ]; then
     echo 'Error: mvn missing in PATH. Unable to build application.' >&2
     exit 1
 fi
