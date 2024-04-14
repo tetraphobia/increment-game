@@ -8,6 +8,11 @@ if ! [ -x "$(command -v mvn)" ]; then
     exit 1
 fi
 
+if ! [ -f "$(pwd)/target/increment-game-0.0.1.jar" ]; then
+    mvn clean;
+    mvn package;
+fi
+
 cool-retro-term \
     --workdir `pwd` \
     -T "Increment" \
