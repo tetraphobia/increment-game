@@ -39,7 +39,7 @@ public class MainMenu extends Panel {
         // Configure header panel
         try {
             // This has to be loaded as a Stream
-            InputStream stream = ClassLoader.getSystemResourceAsStream("banner.txt");
+            InputStream stream = MainMenu.class.getResourceAsStream("banner.txt");
             headerPanel.addComponent(Header.fromStream(stream));
         } catch (FileNotFoundException e) {
             System.err.println("oopsie i couldnt find `banner.txt`");

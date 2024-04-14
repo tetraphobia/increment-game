@@ -3,6 +3,9 @@ package com.wyvrn.increment;
 import java.io.IOException;
 import java.util.Arrays;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
@@ -36,5 +39,13 @@ public class App {
 
         window.setComponent(new MainMenu());
         gui.addWindowAndWait(window);
+
+        // Play some sweet chiptunes
+        try {
+            Audio.playMusic();
+        } catch (LineUnavailableException | UnsupportedAudioFileException e) {
+            e.printStackTrace();
+            System.out.println("Couldn't load music file, continuing without music.");
+        }
     }
 }
