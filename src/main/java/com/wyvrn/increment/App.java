@@ -14,7 +14,7 @@ import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 
-import com.wyvrn.increment.panels.MainMenu;
+import com.wyvrn.increment.windows.MainMenu;
 import com.wyvrn.increment.windows.GameWindow;
 
 /**
@@ -36,13 +36,11 @@ public class App {
 
         screen.startScreen();
 
-        GameWindow window = new GameWindow();
 
         MultiWindowTextGUI gui = new MultiWindowTextGUI(screen, new DefaultWindowManager(),
                 new EmptySpace(TextColor.ANSI.DEFAULT));
 
-        window.setComponent(new MainMenu());
+        GameWindow window = new MainMenu(gui);
         gui.addWindowAndWait(window);
-
     }
 }

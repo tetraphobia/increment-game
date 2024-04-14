@@ -2,19 +2,29 @@ package com.wyvrn.increment.windows;
 
 import java.util.Arrays;
 
-import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.graphics.SimpleTheme;
+import com.googlecode.lanterna.bundle.LanternaThemes;
 import com.googlecode.lanterna.gui2.BasicWindow;
+import com.googlecode.lanterna.gui2.MultiWindowTextGUI;
 import com.googlecode.lanterna.gui2.Window;
 
 /**
  * GameWindow
  */
-public class GameWindow extends BasicWindow {
+public abstract class GameWindow extends BasicWindow {
+    private MultiWindowTextGUI gui;
 
-    public GameWindow() {
+    public GameWindow(MultiWindowTextGUI gui) {
         super();
         super.setHints(Arrays.asList(Window.Hint.CENTERED, Window.Hint.FULL_SCREEN));
-        super.setTheme(new SimpleTheme(TextColor.ANSI.GREEN_BRIGHT, TextColor.ANSI.DEFAULT));
+        super.setTheme(LanternaThemes.getRegisteredTheme("businessmachine"));
+        this.gui = gui;
+    }
+
+    public MultiWindowTextGUI getGui() {
+        return gui;
+    }
+
+    public void setGui(MultiWindowTextGUI gui) {
+        this.gui = gui;
     }
 }

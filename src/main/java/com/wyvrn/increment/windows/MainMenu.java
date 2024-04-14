@@ -1,33 +1,42 @@
-package com.wyvrn.increment.panels;
+package com.wyvrn.increment.windows;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import com.googlecode.lanterna.TextColor;
+import com.googlecode.lanterna.bundle.LanternaThemes;
+import com.googlecode.lanterna.graphics.SimpleTheme;
 import com.googlecode.lanterna.gui2.Button;
 import com.googlecode.lanterna.gui2.GridLayout;
+import com.googlecode.lanterna.gui2.MultiWindowTextGUI;
 import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.GridLayout.Alignment;
+import com.googlecode.lanterna.gui2.dialogs.FileDialog;
+import com.googlecode.lanterna.gui2.dialogs.FileDialogBuilder;
+import com.wyvrn.increment.panels.Header;
 
 /**
  * MainMenu
  */
+public class MainMenu extends GameWindow {
 
-public class MainMenu extends Panel {
-
-    public MainMenu() {
-        super();
+    public MainMenu(MultiWindowTextGUI gui) {
+        super(gui);
 
         // Configure layout manager
         GridLayout layout = new GridLayout(1);
         layout.setVerticalSpacing(2);
-        this.setLayoutManager(layout);
+
+        Panel mainMenuGrid = new Panel();
+        mainMenuGrid.setLayoutManager(layout);
 
         Panel headerPanel = new Panel();
-        Panel mainMenuPanel = new Panel();
+        Panel buttonsPanel = new Panel();
 
-        this.addComponent(headerPanel);
-        this.addComponent(mainMenuPanel);
+        mainMenuGrid.addComponent(headerPanel);
+        mainMenuGrid.addComponent(buttonsPanel);
 
         // Configure header panel
         try {
@@ -41,21 +50,32 @@ public class MainMenu extends Panel {
 
         // Populate main menu items
         for (Button btn : this.generateMenuItems()) {
-            mainMenuPanel.addComponent(btn);
+            buttonsPanel.addComponent(btn);
         }
 
         // Alignment for components
         headerPanel.setLayoutData(GridLayout.createLayoutData(Alignment.CENTER, Alignment.CENTER, true, false));
-        mainMenuPanel.setLayoutData(GridLayout.createLayoutData(Alignment.CENTER, Alignment.CENTER, false, false));
+        buttonsPanel.setLayoutData(GridLayout.createLayoutData(Alignment.CENTER, Alignment.CENTER, false, false));
+
+        setComponent(mainMenuGrid);
     }
 
-    private ArrayList<Button> generateMenuItems(){
+    private ArrayList<Button> generateMenuItems() {
         ArrayList<Button> buttons = new ArrayList<>();
+        MultiWindowTextGUI gui = super.getGui();
 
         // Load Game
         buttons.add(new Button("Load Game", new Runnable() {
             @Override
             public void run() {
+                FileDialog dialog = new FileDialogBuilder()
+                        .setTitle("Load Game")
+                        .setDescription("Choose a save file (probably ending in .json)")
+                        .setActionLabel("Load")
+                        .build();
+                dialog.setTheme(LanternaThemes.getRegisteredTheme("businessmachine"));
+
+                File input = dialog.showDialog(gui);
             }
         }));
 
