@@ -1,11 +1,22 @@
 package com.wyvrn.increment;
 
 import java.io.IOException;
+import java.util.Arrays;
+
+import com.googlecode.lanterna.TerminalPosition;
+import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
+import com.googlecode.lanterna.gui2.BasicWindow;
+import com.googlecode.lanterna.gui2.DefaultWindowManager;
+import com.googlecode.lanterna.gui2.EmptySpace;
+import com.googlecode.lanterna.gui2.MultiWindowTextGUI;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
+
+import com.wyvrn.increment.panels.Header;
+import com.wyvrn.increment.windows.MainMenu;
 
 /**
  * Hello world!
@@ -16,16 +27,12 @@ public class App {
         Terminal terminal = new DefaultTerminalFactory().createTerminal();
         Screen screen = new TerminalScreen(terminal);
 
-        String s = "Hello world!";
-        TextGraphics tGraphics = screen.newTextGraphics();
-
         screen.startScreen();
-        screen.clear();
 
-        tGraphics.putString(10, 10, s);
-        screen.refresh();
+        BasicWindow mainMenuWindow = new MainMenu();
 
-        screen.readInput();
-        screen.stopScreen();
+        MultiWindowTextGUI gui = new MultiWindowTextGUI(screen, new DefaultWindowManager(),
+                new EmptySpace(TextColor.ANSI.DEFAULT));
+        gui.addWindowAndWait(mainMenuWindow);
     }
 }
