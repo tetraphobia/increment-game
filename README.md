@@ -1,5 +1,5 @@
 # Increment
-![A screenshot of the game](/doc/screenshot.png)
+![A screenshot of the main menu](/doc/screenshot.png)
 
 ## Description
 A Java game I wrote for a compsci project.
