@@ -21,12 +21,11 @@ import com.wyvrn.increment.windows.GameWindow;
  * Hello world!
  *
  */
-public class App {
+public class Main {
     public static void main(String[] args) throws IOException {
         Terminal terminal = new DefaultTerminalFactory().createTerminal();
         Screen screen = new TerminalScreen(terminal);
 
-        // Play some sweet chiptunes
         try {
             Audio.playMusic();
         } catch (LineUnavailableException | UnsupportedAudioFileException e) {
@@ -35,7 +34,6 @@ public class App {
         }
 
         screen.startScreen();
-
 
         MultiWindowTextGUI gui = new MultiWindowTextGUI(screen, new DefaultWindowManager(),
                 new EmptySpace(TextColor.ANSI.DEFAULT));

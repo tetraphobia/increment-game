@@ -8,16 +8,16 @@ import com.googlecode.lanterna.gui2.MultiWindowTextGUI;
 import com.googlecode.lanterna.gui2.Window;
 
 /**
- * GameWindow
+ * RootWindow
  */
-public abstract class GameWindow extends BasicWindow {
+public abstract class RootWindow extends BasicWindow {
     private MultiWindowTextGUI gui;
 
-    public GameWindow(MultiWindowTextGUI gui) {
+    public RootWindow(MultiWindowTextGUI gui) {
         super();
         super.setHints(Arrays.asList(Window.Hint.CENTERED, Window.Hint.FULL_SCREEN));
+        super.setTheme(LanternaThemes.getRegisteredTheme("businessmachine"));
         this.gui = gui;
-        gui.setTheme(LanternaThemes.getRegisteredTheme("businessmachine"));
     }
 
     public MultiWindowTextGUI getGui() {

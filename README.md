@@ -30,7 +30,7 @@ To run without the CRT wrapper, run:
 ```sh
 mvn clean
 mvn package
-java -cp target/increment-game-0.0.1.jar com.wyvrn.increment.App
+java -cp target/increment-game-0.0.1.jar com.wyvrn.increment.Main
 ```
 
 ## Contributing

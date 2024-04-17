@@ -4,16 +4,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.bundle.LanternaThemes;
-import com.googlecode.lanterna.graphics.SimpleTheme;
 import com.googlecode.lanterna.gui2.Button;
 import com.googlecode.lanterna.gui2.GridLayout;
 import com.googlecode.lanterna.gui2.MultiWindowTextGUI;
@@ -21,8 +16,11 @@ import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.GridLayout.Alignment;
 import com.googlecode.lanterna.gui2.dialogs.FileDialog;
 import com.googlecode.lanterna.gui2.dialogs.FileDialogBuilder;
+import com.googlecode.lanterna.gui2.dialogs.MessageDialog;
+import com.googlecode.lanterna.gui2.dialogs.MessageDialogBuilder;
 import com.googlecode.lanterna.gui2.dialogs.TextInputDialog;
 import com.googlecode.lanterna.gui2.dialogs.TextInputDialogBuilder;
+import com.wyvrn.increment.GameState;
 import com.wyvrn.increment.panels.Header;
 
 /**
@@ -32,39 +30,38 @@ public class MainMenu extends GameWindow {
 
     public MainMenu(MultiWindowTextGUI gui) {
         super(gui);
+        this.populateWindow();
+    }
 
-        // Configure layout manager
+    private void populateWindow() {
+        Panel buttonsPanel = new Panel();
+        Panel headerPanel = new Panel();
+        Panel mainMenuGrid = new Panel();
+
         GridLayout layout = new GridLayout(1);
         layout.setVerticalSpacing(2);
 
-        Panel mainMenuGrid = new Panel();
-        mainMenuGrid.setLayoutManager(layout);
+        headerPanel.setLayoutData(GridLayout.createLayoutData(Alignment.CENTER, Alignment.CENTER, true, false));
+        buttonsPanel.setLayoutData(GridLayout.createLayoutData(Alignment.CENTER, Alignment.CENTER, false, false));
 
-        Panel headerPanel = new Panel();
-        Panel buttonsPanel = new Panel();
-
+        // Header is added before menu buttons
         mainMenuGrid.addComponent(headerPanel);
         mainMenuGrid.addComponent(buttonsPanel);
+        mainMenuGrid.setLayoutManager(layout);
 
-        // Configure header panel
         try {
-            // This has to be loaded as a Stream
             InputStream stream = MainMenu.class.getResourceAsStream("banner.txt");
             headerPanel.addComponent(Header.fromStream(stream));
         } catch (FileNotFoundException e) {
-            System.err.println("oopsie i couldnt find `banner.txt`");
-            headerPanel.addComponent(new Header("oopsie i couldnt find the banner"));
+            String err = "oopsie i couldnt find banner.txt";
+            System.err.println(err);
+            headerPanel.addComponent(new Header(err));
         }
 
-        // Populate main menu items
         for (Button btn : this.generateMenuItems()) {
             btn.setRenderer(new Button.FlatButtonRenderer());
             buttonsPanel.addComponent(btn);
         }
-
-        // Alignment for components
-        headerPanel.setLayoutData(GridLayout.createLayoutData(Alignment.CENTER, Alignment.CENTER, true, false));
-        buttonsPanel.setLayoutData(GridLayout.createLayoutData(Alignment.CENTER, Alignment.CENTER, false, false));
 
         setComponent(mainMenuGrid);
     }
@@ -77,7 +74,7 @@ public class MainMenu extends GameWindow {
         buttons.add(new Button("Load Game", new Runnable() {
             @Override
             public void run() {
-                Path saveDir = Paths.get(System.getProperty("user.home") + "/.increment-saves/");
+                Path saveDir = Paths.get(System.getProperty("user.home"), ".increment-saves");
                 try {
                     saveDir.toFile().createNewFile();
                 } catch (IOException e) {
@@ -90,9 +87,24 @@ public class MainMenu extends GameWindow {
                         .setSelectedFile(saveDir.toFile())
                         .setActionLabel("Load")
                         .build();
-                dialog.setTheme(LanternaThemes.getRegisteredTheme("businessmachine"));
 
                 File input = dialog.showDialog(gui);
+
+                try {
+                    GameState loadedState = GameState.fromSaveFile(input);
+                    MachinesWindow mWindow = new MachinesWindow(gui, input, loadedState);
+                    gui.addWindowAndWait(mWindow);
+                    
+                    
+                } catch (Exception e) {
+                    MessageDialog errDialog = new MessageDialogBuilder()
+                            .setTitle("Load Error")
+                            .setText("Error occured while loading file.\n" + e.getMessage())
+                            .build();
+
+                    errDialog.showDialog(gui);
+                }
+
             }
         }));
 
@@ -110,10 +122,9 @@ public class MainMenu extends GameWindow {
                 TextInputDialog dialog = new TextInputDialogBuilder()
                         .setTitle("New Game")
                         .setDescription("Enter a name for your new game (Alphanumeric only).")
-                        .setValidationPattern(Pattern.compile("^[a-zA-Z0-9-_]+$"), "Must be alphanumeric, dashes, or underscores.$")
+                        .setValidationPattern(Pattern.compile("^[a-zA-Z0-9-_]+$"),
+                                "Must be alphanumeric, dashes, or underscores.$")
                         .build();
-
-                dialog.setTheme(LanternaThemes.getRegisteredTheme("businessmachine"));
 
                 String input = dialog.showDialog(gui);
                 File saveFile = new File(saveDir.toString(), input + ".json");

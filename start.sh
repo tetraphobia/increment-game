@@ -18,4 +18,4 @@ cool-retro-term \
     -T "Increment" \
     $1 \
     -e /bin/bash \
-    -c 'java -cp target/increment-game-0.0.1.jar com.wyvrn.increment.App'
+    -c 'java -cp target/increment-game-0.0.1.jar com.wyvrn.increment.Main'
