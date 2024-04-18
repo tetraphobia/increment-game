@@ -52,12 +52,25 @@ public class GameState {
         this.machines = machines;
     }
 
+    public void addMachine(Machine machine) {
+        this.machines.add(machine);
+    }
+
     public int getCredits() {
         return credits;
     }
 
     public void setCredits(int credits) {
         this.credits = credits;
+    }
+
+    public void tickAll() {
+        int accumulator = 0;
+        for (Machine machine : this.machines) {
+            accumulator += machine.getOutput();
+        }
+
+        this.setCredits(this.getCredits() + accumulator);
     }
 
     public static GameState fromSaveFile(File saveFile) throws FileNotFoundException, InvalidSaveException {
@@ -70,7 +83,7 @@ public class GameState {
         JsonArray jsonMachines = jsonObject.get("machines").getAsJsonArray();
         ArrayList<Machine> machines = new ArrayList<>();
 
-        for (JsonElement jsonMachine : jsonMachines ) {
+        for (JsonElement jsonMachine : jsonMachines) {
             JsonObject obj = jsonMachine.getAsJsonObject();
             String type = obj.get("type").getAsString();
             if (type.equals("small")) {
@@ -85,7 +98,11 @@ public class GameState {
         return new GameState(machines, credits, lifetimeGenerated);
     }
 
-    public void saveGame() {
+    public static GameState fromDefaults() {
+        ArrayList<Machine> machines = new ArrayList<>();
+
+        machines.add(new SmallMachine().createDefault());
+        return new GameState(machines, 0, 0);
     }
 
     public static void main(String[] args) {

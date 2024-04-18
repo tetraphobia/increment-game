@@ -4,10 +4,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 import com.googlecode.lanterna.gui2.Button;
 import com.googlecode.lanterna.gui2.GridLayout;
@@ -16,10 +16,7 @@ import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.GridLayout.Alignment;
 import com.googlecode.lanterna.gui2.dialogs.FileDialog;
 import com.googlecode.lanterna.gui2.dialogs.FileDialogBuilder;
-import com.googlecode.lanterna.gui2.dialogs.MessageDialog;
-import com.googlecode.lanterna.gui2.dialogs.MessageDialogBuilder;
-import com.googlecode.lanterna.gui2.dialogs.TextInputDialog;
-import com.googlecode.lanterna.gui2.dialogs.TextInputDialogBuilder;
+import com.wyvrn.increment.Dialog;
 import com.wyvrn.increment.GameState;
 import com.wyvrn.increment.panels.Header;
 
@@ -74,8 +71,9 @@ public class MainMenu extends GameWindow {
         buttons.add(new Button("Load Game", new Runnable() {
             @Override
             public void run() {
-                Path saveDir = Paths.get(System.getProperty("user.home"), ".increment-saves");
+                Path saveDir = Paths.get(System.getProperty("user.home"), ".increment-saves/");
                 try {
+                    Files.createDirectories(saveDir);
                     saveDir.toFile().createNewFile();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -90,19 +88,15 @@ public class MainMenu extends GameWindow {
 
                 File input = dialog.showDialog(gui);
 
+                if (input == null)
+                    return;
+
                 try {
                     GameState loadedState = GameState.fromSaveFile(input);
-                    MachinesWindow mWindow = new MachinesWindow(gui, input, loadedState);
+                    MachinesWindow mWindow = new MachinesWindow(gui, loadedState);
                     gui.addWindowAndWait(mWindow);
-                    
-                    
                 } catch (Exception e) {
-                    MessageDialog errDialog = new MessageDialogBuilder()
-                            .setTitle("Load Error")
-                            .setText("Error occured while loading file.\n" + e.getMessage())
-                            .build();
-
-                    errDialog.showDialog(gui);
+                    Dialog.display(gui, "Load Error", "Error occurred while loading file.\n" + e.getMessage());
                 }
 
             }
@@ -112,27 +106,14 @@ public class MainMenu extends GameWindow {
         buttons.add(new Button("New Game", new Runnable() {
             @Override
             public void run() {
-                Path saveDir = Paths.get(System.getProperty("user.home") + "/.increment-saves/");
                 try {
-                    saveDir.toFile().createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                    GameState loadedState = GameState.fromDefaults();
+                    Dialog.display(gui, "New Game", "Welcome to Increment!\n\nYour goal is to make credits\n...\nForever.");
+                    MachinesWindow mWindow = new MachinesWindow(gui, loadedState);
+                    gui.addWindowAndWait(mWindow);
 
-                TextInputDialog dialog = new TextInputDialogBuilder()
-                        .setTitle("New Game")
-                        .setDescription("Enter a name for your new game (Alphanumeric only).")
-                        .setValidationPattern(Pattern.compile("^[a-zA-Z0-9-_]+$"),
-                                "Must be alphanumeric, dashes, or underscores.$")
-                        .build();
-
-                String input = dialog.showDialog(gui);
-                File saveFile = new File(saveDir.toString(), input + ".json");
-
-                try {
-                    saveFile.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (Exception e) {
+                    Dialog.display(gui, "Load Error", "Error occured while loading file.\n" + e.getMessage());
                 }
 
             }

@@ -1,8 +1,3 @@
-if ! [ -x "$(command -v cool-retro-term)" ]; then
-    echo 'Error: cool-retro-term missing in PATH. Unable to wrap application.' >&2
-    exit 1
-fi
-
 if ! [ -x "$(command -v mvn)" ]; then
     echo 'Error: mvn missing in PATH. Unable to build application.' >&2
     exit 1
@@ -13,9 +8,15 @@ if ! [ -f "$(pwd)/target/increment-game-0.0.1.jar" ]; then
     mvn package;
 fi
 
-cool-retro-term \
-    --workdir `pwd` \
-    -T "Increment" \
-    $1 \
-    -e /bin/bash \
-    -c 'java -cp target/increment-game-0.0.1.jar com.wyvrn.increment.Main'
+if ! [ -x "$(command -v cool-retro-term)" ]; then
+    echo 'Error: cool-retro-term missing in PATH. Falling back to current terminal.' >&2
+    java -cp target/increment-game-0.0.1.jar com.wyvrn.increment.Main
+
+else
+    cool-retro-term \
+        --workdir `pwd` \
+        -T "Increment" \
+        $1 \
+        -e /bin/bash \
+        -c 'java -cp target/increment-game-0.0.1.jar com.wyvrn.increment.Main'
+fi
