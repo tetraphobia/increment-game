@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Scanner;
 
-import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.gui2.BasicWindow;
 import com.googlecode.lanterna.gui2.Label;
 
@@ -18,7 +17,7 @@ public class Header extends Label {
     }
 
     /**
-     * Factory method for instantiating Headers from text streams.
+     * Helper function to read an {@link InputStream} into a {@link String}.
      * 
      * @return {@link Header}
      */
