@@ -106,7 +106,7 @@ public class MainMenu extends GameWindow {
             @Override
             public void run() {
                 try {
-                    GameState loadedState = GameState.fromDefaults();
+                    GameState loadedState = new GameState();
                     Dialog.display(gui, "New Game", "Welcome to Increment!\n\nYour goal is to make credits\n...\nForever.");
                     MachinesWindow mWindow = new MachinesWindow(gui, loadedState);
                     gui.addWindowAndWait(mWindow);
