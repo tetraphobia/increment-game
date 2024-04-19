@@ -13,6 +13,13 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  * Audio
  */
 public class Audio {
+    /**
+     * Plays a wav file.
+     *
+     * @throws LineUnavailableException
+     * @throws UnsupportedAudioFileException
+     * @throws IOException
+     */
     public static void playMusic() throws LineUnavailableException, UnsupportedAudioFileException, IOException {
         URL musicFile = Audio.class.getResource("underclocked.wav");
 
