@@ -19,18 +19,16 @@ public class LargeMachine extends Machine implements Upgradable {
 
     public LargeMachine(int cost, int output) {
         super(cost, output, "large");
-        this.initUpgradeDefaults();
+        this.upgradeCost = Upgradable.Defaults.UPGRADE_COST;
+        this.upgradeOutput = Upgradable.Defaults.UPGRADE_OUTPUT;
+        this.upgradeLevel = Upgradable.Defaults.UPGRADE_LEVEL;
     }
 
     public LargeMachine() {
         super(1000, 100, "large");
-        this.initUpgradeDefaults();
-    }
-
-    private void initUpgradeDefaults() {
-        this.upgradeLevel = 0;
-        this.upgradeOutput = 1.2;
-        this.upgradeCost = 0.8;
+        this.upgradeCost = Upgradable.Defaults.UPGRADE_COST;
+        this.upgradeOutput = Upgradable.Defaults.UPGRADE_OUTPUT;
+        this.upgradeLevel = Upgradable.Defaults.UPGRADE_LEVEL;
     }
 
     @Override
