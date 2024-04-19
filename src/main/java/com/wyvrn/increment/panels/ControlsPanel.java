@@ -10,7 +10,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-import com.google.gson.Gson;
 import com.googlecode.lanterna.gui2.Button;
 import com.googlecode.lanterna.gui2.MultiWindowTextGUI;
 import com.googlecode.lanterna.gui2.Panel;
@@ -18,7 +17,6 @@ import com.googlecode.lanterna.gui2.dialogs.ActionListDialog;
 import com.googlecode.lanterna.gui2.dialogs.ActionListDialogBuilder;
 import com.googlecode.lanterna.gui2.dialogs.TextInputDialog;
 import com.googlecode.lanterna.gui2.dialogs.TextInputDialogBuilder;
-import com.wyvrn.increment.Dialog;
 import com.wyvrn.increment.GameState;
 import com.wyvrn.increment.buildings.machines.LargeMachine;
 import com.wyvrn.increment.buildings.machines.Machine;
@@ -30,8 +28,13 @@ import com.wyvrn.increment.buildings.machines.SmallMachine;
 public class ControlsPanel extends Panel {
     private MultiWindowTextGUI gui;
     private GameState state;
-    private Runnable onSubmit; // A callback for when an option is chosen.
+    private Runnable onSubmit;
 
+    /**
+     * @param gui       A {@link MultiWindowTextGUI}.
+     * @param state     The current {@link GameState}.
+     * @param onSubmit  A {@link Runnable} that is ran when a selection is submitted.
+     */
     public ControlsPanel(MultiWindowTextGUI gui, GameState state, Runnable onSubmit) {
         super();
         this.gui = gui;
@@ -44,6 +47,12 @@ public class ControlsPanel extends Panel {
         }
     }
 
+    
+    /**
+     * Generates an {@link ArrayList} of statically-defined buttons and their Runnables.
+     *
+     * @return  ArrayList<Button>
+     */
     private ArrayList<Button> generateButtons() {
         ArrayList<Button> buttons = new ArrayList<>();
 
