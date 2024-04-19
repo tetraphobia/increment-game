@@ -2,24 +2,30 @@
 ![A screenshot of the main menu](/doc/menu.png)
 
 ## Description
-A Java game I wrote for a compsci project.
+A Java game I wrote for a compsci project. Generate credits forever.
 
 ## Implemented Concepts
+For a quick four, look at `GameState.java`, `buildings/machines/Machine.java` and `buildings/machines/LargeMachine.java`.
 
 ### Inheritance
-- [x] `GameWindow` extends `BasicWindow` for themeing and passing a reference to the TUI.
-- [ ] `Generator` extends `Building`, `SmallGenerator` and `LargeGenerator` both extend `Generator`.
+- [x] `SmallMachine` and `LargeMachine` both extend `Machine`.
 ### Abstract classes
-- [x] The `GameWindow` class is an abstract class extended by multiple game windows.
-- [ ] The `Building` class is an abstract class extended by the buyable buildings.
+- [x] The `Machine` class is an abstract class extended by `SmallMachine` and `LargeMachine`.
 ### Interfaces
-- [ ] The `SmallGenerator` and `LargeGenerator` classes both implement the `Upgradable` interface.
+- [x] The `Upgradable` interface is implemented by `LargeMachine`.
 ### File I/O
-- [x] Loading the main menu triggers music to be played, which is read from a resource folder, converted to an `AudioInputStream`, and then played.
-- [ ] Game state is loaded from a file and then saved to the same file.
+- [x] A JSON representation of the game's state is saved to a json file of the user's choosing.
+- [x] If a save file exists, the user can choose to load it and instantiate a new `GameState` using that file.
+### Exception Handling for User Input
+- [x] If a user chooses a save file that does not exist, an exception will be caught and a dialog will be shown prompting them to try again.
+- [x] If a user inputs invalid characters in their "save game" prompt, they will be asked to try again. (Technically handled by the library.)
+### Override toString()
+- [x] The `GameState.toString()` method overrides the `Object.toString()` method.
+### Overloading
+- [x] Both `Machine` child classes have overloaded constructors.
 
 ## Requirements
-- Cool Retro Term (https://github.com/Swordfish90/cool-retro-term)
+- (Optional) Cool Retro Term (https://github.com/Swordfish90/cool-retro-term)
 - Maven (To build from source)
 - OpenJDK >= 17
 
