@@ -109,17 +109,4 @@ public class GameState {
     public String toString() {
         return new Gson().toJson(this);
     }
-
-    public static void main(String[] args) {
-        // Testing
-        try {
-            GameState something = GameState.fromSaveFile(new File("/home/tetraphobia/.increment-saves/jacob.json"));
-            System.out.println(something);
-            System.out.println(something.getCredits());
-            System.out.println(something.getLifetimeGenerated());
-            System.out.println(something.getMachines());
-        } catch (InvalidSaveException | FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
 }
