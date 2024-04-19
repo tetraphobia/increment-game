@@ -23,6 +23,10 @@ class InvalidSaveException extends IllegalArgumentException {
 
 /**
  * GameState
+ *
+ * @param machines An ArrayList of Machine objects.
+ * @param credits  An int representing the starting number of credits.
+ * @return {@link GameState}
  */
 public class GameState {
     private ArrayList<Machine> machines;
@@ -59,6 +63,9 @@ public class GameState {
         this.credits = credits;
     }
 
+    /**
+     * Causes each machine in the {@link GameState} instance to produce credits.
+     */
     public void tickAll() {
         int accumulator = 0;
         for (Machine machine : this.machines) {
@@ -68,6 +75,15 @@ public class GameState {
         this.setCredits(this.getCredits() + accumulator);
     }
 
+    /**
+     * Loads data from a json save file and returns a new GameState using those
+     * values.
+     *
+     * @param saveFile A File pointing to a valid json save file.
+     * @return {@link GameState}
+     * @throws FileNotFoundException
+     * @throws InvalidSaveException
+     */
     public static GameState fromSaveFile(File saveFile) throws FileNotFoundException, InvalidSaveException {
         BufferedReader reader = new BufferedReader(new FileReader(saveFile));
         JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
