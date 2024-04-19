@@ -30,6 +30,9 @@ public class MainMenu extends GameWindow {
         this.populateWindow();
     }
 
+    /**
+     * Adds panels to main menu.
+     */
     private void populateWindow() {
         Panel buttonsPanel = new Panel();
         Panel headerPanel = new Panel();
@@ -63,6 +66,12 @@ public class MainMenu extends GameWindow {
         setComponent(mainMenuGrid);
     }
 
+    
+    /**
+     * Returns an {@link ArrayList} of statically-defined buttons and their Runnables.
+     *
+     * @return  ArrayList<Button>   An {@link ArrayList} of Button objects.
+     */
     private ArrayList<Button> generateMenuItems() {
         ArrayList<Button> buttons = new ArrayList<>();
         MultiWindowTextGUI gui = super.getGui();
