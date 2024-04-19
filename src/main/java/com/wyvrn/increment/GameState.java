@@ -86,12 +86,11 @@ public class GameState {
         for (JsonElement jsonMachine : jsonMachines) {
             JsonObject obj = jsonMachine.getAsJsonObject();
             String type = obj.get("type").getAsString();
+
             if (type.equals("small")) {
-                SmallMachine machine = new SmallMachine(obj.get("cost").getAsInt(), obj.get("output").getAsInt());
-                machines.add(machine);
+                machines.add(new SmallMachine().fromJsonObject(obj));
             } else if (type.equals("large")) {
-                LargeMachine machine = new LargeMachine(obj.get("cost").getAsInt(), obj.get("output").getAsInt());
-                machines.add(machine);
+                machines.add(new LargeMachine().fromJsonObject(obj));
             }
         }
 
@@ -101,7 +100,7 @@ public class GameState {
     public static GameState fromDefaults() {
         ArrayList<Machine> machines = new ArrayList<>();
 
-        machines.add(new SmallMachine().createDefault());
+        machines.add(new SmallMachine());
         return new GameState(machines, 0, 0);
     }
 

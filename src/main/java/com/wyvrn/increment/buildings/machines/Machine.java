@@ -1,5 +1,7 @@
 package com.wyvrn.increment.buildings.machines;
 
+import com.google.gson.JsonObject;
+
 interface Upgradable {
     public int getUpgradeCost();
 
@@ -19,12 +21,6 @@ public abstract class Machine {
     private int cost;
     private int output;
     private String type;
-
-    public Machine() {
-        this.cost = 0;
-        this.output = 0;
-        this.type = "default";
-    }
 
     public Machine(int cost, int output, String type) {
         this.cost = cost;
@@ -56,6 +52,5 @@ public abstract class Machine {
         this.output = output;
     }
 
-    // TODO refactor this into a MachineFactory class
-    public abstract Machine createDefault();
+    public abstract Machine fromJsonObject(JsonObject obj);
 }

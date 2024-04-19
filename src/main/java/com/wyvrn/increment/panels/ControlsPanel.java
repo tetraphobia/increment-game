@@ -30,8 +30,7 @@ import com.wyvrn.increment.buildings.machines.SmallMachine;
 public class ControlsPanel extends Panel {
     private MultiWindowTextGUI gui;
     private GameState state;
-    // A callback for when an option is chosen. Used to update the screen.
-    private Runnable onSubmit;
+    private Runnable onSubmit; // A callback for when an option is chosen.
 
     public ControlsPanel(MultiWindowTextGUI gui, GameState state, Runnable onSubmit) {
         super();
@@ -52,26 +51,27 @@ public class ControlsPanel extends Panel {
         buttons.add(new Button("Purchase", new Runnable() {
             @Override
             public void run() {
+                SmallMachine sMachine = new SmallMachine();
+                LargeMachine lMachine = new LargeMachine();
                 ActionListDialog dialog = new ActionListDialogBuilder()
                         .setTitle("Purchase")
-                        .addAction("Small Machine (100)", new Runnable() {
+                        .addAction("Small Machine (" + sMachine.getCost() + ")", new Runnable() {
                             @Override
                             public void run() {
-                                // TODO I'm hardcoding this in out of laziness. Sue me :)
-                                if (state.getCredits() < 100)
+                                if (state.getCredits() < sMachine.getCost())
                                     return;
-                                state.setCredits(state.getCredits() - 100);
-                                state.addMachine(new SmallMachine().createDefault());
+                                state.setCredits(state.getCredits() - sMachine.getCost());
+                                state.addMachine(sMachine);
                                 return;
                             }
                         })
-                        .addAction("Large Machine (1000)", new Runnable() {
+                        .addAction("Large Machine (" + lMachine.getCost() + ")", new Runnable() {
                             @Override
                             public void run() {
-                                if (state.getCredits() < 1000)
+                                if (state.getCredits() < lMachine.getCost())
                                     return;
-                                state.setCredits(state.getCredits() - 1000);
-                                state.addMachine(new LargeMachine().createDefault());
+                                state.setCredits(state.getCredits() - lMachine.getCost());
+                                state.addMachine(new LargeMachine());
                                 return;
                             }
                         })
@@ -133,7 +133,6 @@ public class ControlsPanel extends Panel {
 
                 input = dialog.showDialog(gui);
 
-
                 if (input == null) {
                     return;
                 }
@@ -147,6 +146,8 @@ public class ControlsPanel extends Panel {
                     writer.close();
                 } catch (IOException e) {
                     e.printStackTrace();
+                } finally {
+                    onSubmit.run();
                 }
             }
         }));
@@ -156,6 +157,7 @@ public class ControlsPanel extends Panel {
             @Override
             public void run() {
                 gui.removeWindow(gui.getActiveWindow());
+                onSubmit.run();
             }
         }));
 

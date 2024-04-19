@@ -1,5 +1,7 @@
 package com.wyvrn.increment.buildings.machines;
 
+import com.google.gson.JsonObject;
+
 /**
  * LargeMachine
  */
@@ -8,23 +10,32 @@ public class LargeMachine extends Machine implements Upgradable {
     double upgradeOutput;
     int upgradeLevel;
 
+    public LargeMachine(int cost, int output, double upgradeCost, double upgradeOutput, int upgradeLevel) {
+        super(cost, output, "large");
+        this.upgradeCost = upgradeCost;
+        this.upgradeLevel = upgradeLevel;
+        this.upgradeOutput = upgradeOutput;
+    }
+
     public LargeMachine(int cost, int output) {
         super(cost, output, "large");
-        this.upgradeCost = 0.8;
-        this.upgradeOutput = 1.2;
-        this.upgradeLevel = 0;
+        this.initUpgradeDefaults();
     }
 
     public LargeMachine() {
+        super(1000, 100, "large");
+        this.initUpgradeDefaults();
+    }
+
+    private void initUpgradeDefaults() {
+        this.upgradeLevel = 0;
+        this.upgradeOutput = 1.2;
+        this.upgradeCost = 0.8;
     }
 
     @Override
     public int getUpgradeCost() {
         return (int) (super.getOutput() * this.upgradeCost);
-    }
-
-    public void setUpgradeCost(double upgradeCost) {
-        this.upgradeCost = upgradeCost;
     }
 
     @Override
@@ -49,12 +60,18 @@ public class LargeMachine extends Machine implements Upgradable {
     }
 
     @Override
-    public Machine createDefault() {
-        return new LargeMachine(1000, 30);
+    public String toString() {
+        return "[-" + this.getUpgradeLevel() + "-]";
     }
 
     @Override
-    public String toString() {
-        return "[-" + this.getUpgradeLevel() + "-]";
+    public LargeMachine fromJsonObject(JsonObject obj) {
+        int cost = obj.get("cost").getAsInt();
+        int output = obj.get("output").getAsInt();
+        double upgradeCost = obj.get("upgradeCost").getAsDouble();
+        double upgradeOutput = obj.get("upgradeOutput").getAsDouble();
+        int upgradeLevel = obj.get("upgradeLevel").getAsInt();
+
+        return new LargeMachine(cost, output, upgradeCost, upgradeOutput, upgradeLevel);
     }
 }

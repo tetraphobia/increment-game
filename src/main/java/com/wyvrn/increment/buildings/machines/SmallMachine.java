@@ -1,10 +1,13 @@
 package com.wyvrn.increment.buildings.machines;
 
+import com.google.gson.JsonObject;
+
 /**
  * SmallMachine
  */
 public class SmallMachine extends Machine {
     public SmallMachine() {
+        super(100, 10, "small");
     }
 
     public SmallMachine(int cost, int output) {
@@ -12,7 +15,9 @@ public class SmallMachine extends Machine {
     }
 
     @Override
-    public Machine createDefault() {
-        return new SmallMachine(100, 10);
+    public SmallMachine fromJsonObject(JsonObject obj) {
+        int cost = obj.get("cost").getAsInt();
+        int output = obj.get("output").getAsInt();
+        return new SmallMachine(cost, output);
     }
 }
