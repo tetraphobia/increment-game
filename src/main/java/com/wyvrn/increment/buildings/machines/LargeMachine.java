@@ -51,6 +51,10 @@ public class LargeMachine extends Machine implements Upgradable {
         this.upgradeLevel = upgradeLevel;
     }
 
+    /**
+     * Multiplies the {@link Machine} output by it's upgradeOutput, then sets it to
+     * the new value. Increments the upgradeLevel by one.
+     */
     @Override
     public void upgrade() {
         this.setUpgradeLevel(this.getUpgradeLevel() + 1);

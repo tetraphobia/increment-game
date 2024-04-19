@@ -58,5 +58,11 @@ public abstract class Machine {
         this.output = output;
     }
 
+    /**
+     * Parses a {@link JsonObject} and creates a Machine using the parsed values.
+     * 
+     * @param obj A {@link JsonObject}
+     * @return {@link Machine}
+     */
     public abstract Machine fromJsonObject(JsonObject obj);
 }
