@@ -17,22 +17,8 @@ import com.googlecode.lanterna.terminal.Terminal;
 import com.wyvrn.increment.windows.MainMenu;
 import com.wyvrn.increment.windows.GameWindow;
 
-/**
- * Hello world!
- *
- */
 public class Main {
-    public static void main(String[] args) throws IOException {
-        Terminal terminal = new DefaultTerminalFactory().createTerminal();
-        Screen screen = new TerminalScreen(terminal);
-
-        try {
-            Audio.playMusic();
-        } catch (LineUnavailableException | UnsupportedAudioFileException e) {
-            e.printStackTrace();
-            System.out.println("Couldn't load music file, continuing without music.");
-        }
-
+    private static void loadMainMenu(Screen screen) throws IOException {
         screen.startScreen();
 
         MultiWindowTextGUI gui = new MultiWindowTextGUI(screen, new DefaultWindowManager(),
@@ -40,5 +26,22 @@ public class Main {
 
         GameWindow window = new MainMenu(gui);
         gui.addWindowAndWait(window);
+
+    }
+
+    public static void main(String[] args) {
+        Terminal terminal;
+        try {
+            terminal = new DefaultTerminalFactory().createTerminal();
+            Screen screen = new TerminalScreen(terminal);
+            Audio.playMusic();
+            loadMainMenu(screen);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        }
     }
 }

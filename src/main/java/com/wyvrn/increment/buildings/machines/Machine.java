@@ -3,6 +3,12 @@ package com.wyvrn.increment.buildings.machines;
 import com.google.gson.JsonObject;
 
 interface Upgradable {
+    class Defaults {
+        public static final double UPGRADE_COST = 0.8;
+        public static final double UPGRADE_OUTPUT = 1.2;
+        public static final int UPGRADE_LEVEL = 0;
+    }
+
     public int getUpgradeCost();
 
     public int getUpgradeOutput();
@@ -12,12 +18,6 @@ interface Upgradable {
     public void setUpgradeLevel(int upgradeLevel);
 
     public void upgrade();
-
-    class Defaults {
-        public static final double UPGRADE_COST = 0.8;
-        public static final double UPGRADE_OUTPUT = 1.2;
-        public static final int UPGRADE_LEVEL = 0;
-    }
 }
 
 /**
