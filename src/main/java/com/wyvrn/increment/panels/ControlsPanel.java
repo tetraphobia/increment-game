@@ -113,8 +113,6 @@ public class ControlsPanel extends Panel {
         buttons.add(new Button("Save", new Runnable() {
             @Override
             public void run() {
-                // TODO refactor this to call GameState.toString(), then save the returning JSON
-                Gson gson = new Gson();
                 Path saveDir = Paths.get(System.getProperty("user.home"),
                         ".increment-saves/");
                 try {
@@ -131,13 +129,20 @@ public class ControlsPanel extends Panel {
                                 "Must be alphanumeric, dashes, or underscores.$")
                         .build();
 
-                String input = dialog.showDialog(gui);
+                String input = "";
+
+                input = dialog.showDialog(gui);
+
+
+                if (input == null) {
+                    return;
+                }
                 File saveFile = new File(saveDir.toString(), input + ".json");
 
                 try {
                     saveFile.createNewFile();
                     BufferedWriter writer = new BufferedWriter(new FileWriter(saveFile));
-                    String json = gson.toJson(state);
+                    String json = state.toString();
                     writer.write(json);
                     writer.close();
                 } catch (IOException e) {

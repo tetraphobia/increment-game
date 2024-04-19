@@ -105,6 +105,11 @@ public class GameState {
         return new GameState(machines, 0, 0);
     }
 
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
+    }
+
     public static void main(String[] args) {
         // Testing
         try {
