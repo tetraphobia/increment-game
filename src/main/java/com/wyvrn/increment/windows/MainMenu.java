@@ -74,7 +74,6 @@ public class MainMenu extends GameWindow {
                 Path saveDir = Paths.get(System.getProperty("user.home"), ".increment-saves/");
                 try {
                     Files.createDirectories(saveDir);
-                    saveDir.toFile().createNewFile();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
