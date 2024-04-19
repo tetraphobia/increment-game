@@ -1,7 +1,5 @@
 package com.wyvrn.increment.windows;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.Executors;
@@ -9,18 +7,14 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import com.googlecode.lanterna.gui2.AnimatedLabel;
-import com.googlecode.lanterna.gui2.Border;
 import com.googlecode.lanterna.gui2.Borders;
-import com.googlecode.lanterna.gui2.Component;
 import com.googlecode.lanterna.gui2.Direction;
-import com.googlecode.lanterna.gui2.GridLayout;
 import com.googlecode.lanterna.gui2.Label;
 import com.googlecode.lanterna.gui2.LayoutData;
 import com.googlecode.lanterna.gui2.LinearLayout;
 import com.googlecode.lanterna.gui2.MultiWindowTextGUI;
 import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.Window;
-import com.googlecode.lanterna.gui2.GridLayout.Alignment;
 import com.googlecode.lanterna.gui2.LinearLayout.GrowPolicy;
 import com.wyvrn.increment.GameState;
 import com.wyvrn.increment.buildings.machines.LargeMachine;
@@ -43,6 +37,14 @@ public class MachinesWindow extends GameWindow {
         this.initTicker();
     }
 
+    public GameState getState() {
+        return state;
+    }
+
+    public void setState(GameState state) {
+        this.state = state;
+    }
+
     private void initTicker() {
         Runnable ticker = new Runnable() {
             public void run() {
@@ -56,6 +58,10 @@ public class MachinesWindow extends GameWindow {
         executor.scheduleAtFixedRate(ticker, 0, 1, TimeUnit.SECONDS);
     }
 
+    /**
+     * A very chonky function that sets the layout and populates the screen. I will
+     * not be refactoring this.
+     */
     private void populateWindow() {
         Panel machinesGrid = new Panel();
         this.infoPanel = new Panel();
@@ -88,6 +94,8 @@ public class MachinesWindow extends GameWindow {
 
         this.infoPanel.addComponent(new Label("Credits: " + this.state.getCredits()));
 
+        // I would refactor this into a class method like it used to be, but I'm tired.
+        // This is done like this to fix the upgrade level not updating.
         for (Machine machine : machines) {
             if (machine.getType() == "small") {
                 AnimatedLabel aLabel = new AnimatedLabel("[+]");
@@ -108,11 +116,4 @@ public class MachinesWindow extends GameWindow {
         setComponent(machinesGrid);
     }
 
-    public GameState getState() {
-        return state;
-    }
-
-    public void setState(GameState state) {
-        this.state = state;
-    }
 }
